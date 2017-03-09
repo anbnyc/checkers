@@ -50,14 +50,14 @@ function Board(tiles,player0,player1){
 		y: null
 	}
 	this.players = {};
-	this.players[0] = new Player("orange");
-	this.players[1] = new Player("purple");
+	this.players[0] = new Player("orange",player0);
+	this.players[1] = new Player("purple",player1);
 }
 
-function Player(color){
+function Player(color,path){
 	this.avatar = new Image();
 	this.name = color;
-	this.avatar.src = color === "orange" ? "./images/orange.png" : "./images/purple.svg";
+	this.avatar.src = path;
 	this.color = color === "orange" ? [237,108,48] : [161,87,232];
 	this.crownColor = color === "orange" ? [255,0,63] : [63,0,255];
 	this.jailCount = 0;
