@@ -27,7 +27,7 @@ function initial(){
 }
 
 function prepBoard(callback){
-	board = new Board(tiles,"./images/orange.png","./images/purple.svg");
+	board = new Board(tiles,"images/orange.png","images/purple.svg");
 	callback();
 }
 
