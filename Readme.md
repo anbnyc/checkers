@@ -1,6 +1,8 @@
 # Octopus Checkers
 Welcome to Octopus Checkers. This is just a regular game of checkers. Nothing out of the ordinary here.
 
+Play it at [https://anbnyc.github.io/checkers/](https://anbnyc.github.io/checkers/).
+
 ## Rules
 ### Objective
 The objective of the game is to capture all of the opponent's pieces. You win when 12 of your opponent's pieces are in jail.
