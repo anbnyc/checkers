@@ -1,0 +1,70 @@
+<html>
+<head>
+	<title>Octopus Checkers</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+	<script
+		src="https://code.jquery.com/jquery-3.1.1.min.js"
+		integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<style>
+.row{
+	margin-top: 10.5;
+}
+.img-container{
+	position: relative;
+}
+img.bottom{
+	position: absolute;
+	left: 10;
+	top: 20;
+}
+img.top{
+	position: relative;
+}
+.section{
+	margin: 5px;
+	padding: 10px;
+}
+h3{
+	padding: 10px;
+	margin: 5px;
+}
+i{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+	</style>
+</head>
+<body>
+	<div class="row">
+		<div class="col"><canvas height="600" width="600"></canvas></div>
+		<div class="col s3" layout="column">
+			<div class="section row" id="side-1">
+				<div class="img-container">
+					<img class="bottom" src="./images/purple.svg"></img>
+					<img class="top" height="150" width="150" src="./images/jail.png"></img>
+				</div>
+				<h3>0</h3>
+			</div>
+			<div class="divider"></div>
+			<div class="section row">
+				<i class="col small material-icons tooltipped" data-position="bottom" data-tooltip="Welcome to Octopus Checkers. This is just a regular game of checkers. Nothing out of the ordinary here.">info_outline</i>
+				<h5 class="col" id="turn">Turn: orange</h5>
+			</div>
+			<div class="divider"></div>
+			<div class="section row" id="side-0">
+				<h3>0</h3>
+				<div class="img-container">
+					<img class="bottom" src="./images/orange.png"></img>
+					<img class="top" height="150" width="150" src="./images/jail.png"></img>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="./index.js?version=0"></script>
+</html>
