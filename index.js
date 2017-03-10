@@ -16,7 +16,8 @@ initial();
 function initial(){
 	canvas = document.querySelector("canvas");
 	context = canvas.getContext("2d");
-	prepBoard(()=>{
+	loadImages((player0, player1)=>{
+		board = new Board(tiles, player0, player1);
 		drawBoardAndPieces();
 		canvas.addEventListener('click',clickRouter);
 		window.addEventListener('keydown',keypressRouter);
@@ -24,9 +25,16 @@ function initial(){
 	});
 }
 
-function prepBoard(callback){
-	board = new Board(tiles,"./images/orange.png","./images/purple.svg");
-	callback();
+function loadImages(callback){
+	let player0 = new Image();
+	player0.src = "./images/orange.png";
+	let player1 = new Image();
+	player1.src = "./images/purple.svg";
+	player0.onload = ()=>{
+		player1.onload = ()=>{
+			callback(player0, player1);
+		}
+	}
 }
 
 function Board(tiles,player0,player1){
@@ -47,8 +55,8 @@ function Board(tiles,player0,player1){
 		y: null
 	}
 	this.players = {};
-	this.players[0] = new Player("orange",player0);
-	this.players[1] = new Player("purple",player1);
+	this.players[0] = new Player("orange", player0);
+	this.players[1] = new Player("purple", player1);
 }
 
 function Tile(i, j){
@@ -60,10 +68,9 @@ function Tile(i, j){
 	this.color = (j % 2 === i % 2) ? "gray" : "black";
 }
 
-function Player(color,path){
-	this.avatar = new Image();
+function Player(color, avatar){
+	this.avatar = avatar;
 	this.name = color;
-	this.avatar.src = path;
 	this.color = color === "orange" ? [237,108,48] : [161,87,232];
 	this.crownColor = color === "orange" ? [255,0,63] : [63,0,255];
 	this.jailCount = 0;
