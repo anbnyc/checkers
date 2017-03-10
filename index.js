@@ -6,11 +6,10 @@ let turnCount = 0;
 let isShiftDown = false;
 let clickqueue = [];
 
-let weirdSpeed = .5;
+let weirdSpeed = 10;
 let weirdSpeedFactor = .95;
 let weirdStart = Math.floor(10*Math.random()) + 4;
-let weirdIncrement = Math.floor(10*Math.random()) + 2;
-
+let weirdIncrement = 2;
 initial();
 
 /**** SETUP FUNCTIONS ****/
@@ -388,13 +387,13 @@ function weirdStuff(){
 
 	//only jailbreak if there's anyone in jail
 	if(activity > .5 && board.players[0].jailCount + board.players[1].jailCount > 0){
-		weirdStart += weirdIncrement;
+		weirdStart += Math.floor(10*Math.random()) + weirdIncrement;
 		weirdSpeed *= weirdSpeedFactor;
 		initJailbreak();
 
 	//only kidnap if the game isn't about to end
 	} else if (board.players[0].jailCount < 11 && board.players[1].jailCount < 11) {
-		weirdStart += weirdIncrement;
+		weirdStart += Math.floor(10*Math.random()) + weirdIncrement;
 		weirdSpeed *= weirdSpeedFactor;
 		initKidnap();
 
