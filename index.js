@@ -17,8 +17,7 @@ function initial(){
 	canvas = document.querySelector("canvas");
 	context = canvas.getContext("2d");
 	prepBoard(()=>{
-		drawBoard();
-		drawPieces();
+		drawBoardAndPieces();
 		canvas.addEventListener('click',clickRouter);
 		window.addEventListener('keydown',keypressRouter);
 		window.addEventListener('keyup',keypressRouter);
@@ -34,12 +33,11 @@ function Board(tiles,player0,player1){
 	_.times(tiles,i=>{
 		this[i] = {}
 		_.times(tiles,j=>{
-			this[i][j] = {
-				y: i,
-				x: j,
-				isOccupied: false,
-				isCrowned: false,
-				side: null
+			this[i][j] = new Tile(i,j);
+			if(i <= 2 && i % 2 !== j % 2){
+				_.assign(this[i][j], { isOccupied: true, side: 0 });
+			} else if (i >= 5 && i % 2 !== j % 2){
+				_.assign(this[i][j], { isOccupied: true, side: 1 });
 			}
 		});
 	});
@@ -53,6 +51,15 @@ function Board(tiles,player0,player1){
 	this.players[1] = new Player("purple",player1);
 }
 
+function Tile(i, j){
+	this.y = i;
+	this.x = j;
+	this.isOccupied = false;
+	this.isCrowned = false;
+	this.side = null;
+	this.color = (j % 2 === i % 2) ? "gray" : "black";
+}
+
 function Player(color,path){
 	this.avatar = new Image();
 	this.name = color;
@@ -62,42 +69,7 @@ function Player(color,path){
 	this.jailCount = 0;
 }
 
-function drawBoard(){
-	_.times(tiles,i=>{
-		_.times(tiles,j=>{
-			board[i][j].color = (j % 2 === i % 2) ? "gray" : "black";
-			drawBoardTile(i,j);
-		});
-	});
-}
-
-function drawPieces(){
-	placePieces(0);
-	placePieces(1);
-}
-
-function placePieces(side){
-	const dim = size/tiles;
-	_.times(3,i=>{
-		_.times(tiles,j=>{
-			if(side === 0){
-				if(j % 2 !== i % 2){
-					occupyBoardTile(i, j, side);
-					drawPlayer(i, j, side);
-				}
-			} else if (side === 1){
-				if(j % 2 === i % 2){
-					occupyBoardTile(tiles-1-i, j, side);
-					context.drawImage(board.players[side].avatar, j*dim, size-((i+1)*dim), dim, dim);
-				}
-			} else {
-				console.warn("Side must be 0 or 1. Received "+side);
-			}
-		});
-	});
-}
-
-function restoreBoard(){
+function drawBoardAndPieces(){
 	_.times(tiles,i=>{
 		_.times(tiles,j=>{
 			drawBoardTile(i, j);
@@ -381,7 +353,6 @@ function winEvent(side){
 }
 
 /**** SUPERNATURAL HAPPENINGS ****/
-
 function weirdStuff(){
 	let activity = Math.random();
 
@@ -434,7 +405,7 @@ function initJailbreak(){
 		]
 		function animateDone(){
 			occupyBoardTile(Y, X, side);
-			restoreBoard();
+			drawBoardAndPieces();
 		}
 		kidnapJailbreak(coords, side, animateDone, false);
 	} else {
@@ -460,7 +431,7 @@ function kidnapJailbreak(coords, side, animateDone, kidnap=true){
 	function animate(){
 		startY += coeff*stepY;
 		startX += coeff*stepX;
-		restoreBoard();
+		drawBoardAndPieces();
 		drawPlayer(tileY, tileX, side, startY, startX);
 		tentacle(startY, startX - 718, (kidnap ? (side + 1) % 2 : side));
 		if((kidnap && startX + dim > endX) || (!kidnap && startX <= endX)){
