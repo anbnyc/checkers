@@ -27,14 +27,14 @@ function initial(){
 
 function loadImages(callback){
 	let player0 = new Image();
-	player0.src = "./images/orange.png";
 	let player1 = new Image();
-	player1.src = "./images/purple.svg";
-	player0.onload = ()=>{
-		player1.onload = ()=>{
+	player0.addEventListener("load", ()=>{
+		player1.addEventListener("load", ()=>{
 			callback(player0, player1);
-		}
-	}
+		});
+		player1.src = "./images/purple.svg";
+	});
+	player0.src = "./images/orange.png";
 }
 
 function Board(tiles,player0,player1){
